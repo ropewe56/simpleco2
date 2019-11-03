@@ -1,0 +1,98 @@
+\section{Introduction}
+
+Climate change, its causes, and possible remedies are in public focus. There is a consensus on the human made climate change amoung a vast majority of climate scientist. Yet there are still people who promote the idea that there is no climate change or if there is climate change that the causes are natural and not made und thus also not influencable by humeans. 
+
+As a small contribution to the ongoing discussions in the public realm the objective of this report is to define and implement a very basic model of the earth's athmosphere and determine the amount of infrared radiation that is absorbed in the $15 \mu m$ absorption band of $CO_2$. This results of this little model are only meant to show the effect of $CO_2$ under quite simplifying assumptions are by no means a replacement for the many excellent research made in this field.    
+
+The model is described below and the source code is made available so that everbody interested can check the results. If the author has made a mistake, be it inde model definiion or the computationla code, he would be very appreciative for any hint.
+
+
+\section{Model Description}
+
+The key assumptios of the simple athmospehre model are:
+\begin{itemize}
+	\item The athmosphere consists mostly of molecules that don't interact with infrared radiation in the $15 \mu m$ range
+	\item Only $CO_2$ is absorbing and emitting infrared radiation
+	\item The temperature and pressure of the athmosphere is assumed to be fixed, thus there is no self consistency between absorbtion and temperature
+	\item Only upward travelling radiation is considered  
+	\item The main result is the difference in infrared radiation at the top of the athmosphere (TOA) at $70 km$ escaping to free space 
+	\item Scatterng will be neglected
+	\item The athmospheric  gas is in local thermodynamic equalibrium so that all enery levels are occupied according to 
+	the Boltzmann factor
+	\item All spectroscopic data of $CO_2$ ar etaken fro the HITRAn data base. 
+\end{itemize}
+
+
+\subsection{Radiation Transport Equation}
+
+The radiation transport equation reads:
+\begin{align}
+	\label{eqn1}
+	\dfrac{d I_{\lambda}}{ds} = - \kappa_\lambda I_{\lambda} + 	\epsilon_\lambda
+\end{align}
+with:
+\begin{align*}
+	&I_{\lambda}    : \left[\dfrac{W}{m^2 \; sr \; m}\right] \\
+	&\epsilon_{\lambda} : \left[\dfrac{W}{m^3 \; sr \; m}\right] \\
+	&\kappa_{\lambda}   : \left[\dfrac{1}{m}\right]
+\end{align*}
+
+The spantaneous emission $\epsilon_\lambda$ is given by:
+\begin{align}
+	\epsilon_\lambda &= \dfrac{1}{4 \pi} \dfrac{h c}{\lambda} N_u A_{ul} f(\lambda)
+	 \dfrac{\lambda^2}{c}
+\end{align}
+$A_{ul}$ ist the Einstein coefficient of spontaneous emission from upper to lower energy state, $N_u$ the density of the upper state and is the
+$f(\lambda)$ line shape. The absorption coefficient $\kappa_\lambda$ is given by:
+\begin{align}
+	\kappa_\lambda  = \dfrac{h}{\lambda}  \left(  B_{lu} N_l -  B_{ul} N_u \right) f(\lambda)
+	 \dfrac{\lambda^2}{c}
+\end{align}
+with the Einstein coefficients of absorption and stimulated emission:
+\begin{align}
+	B_{ul} &= \dfrac{1}{8 \pi} \dfrac{\lambda^3}{h} A_{ul} \;\;\; , \;\;\; \left[\dfrac{m^3}{J s^2}\right] \\
+	B_{lu} &= \dfrac{g_u}{g_l} B_{ul}
+\end{align}
+The ensities of the upper and lower states are given by the Boltmann distribution at local temperature $T$:
+\begin{align}
+	N_u &= N \dfrac{g_u}{Q(T)} \exp\left(- \dfrac{E_u}{k_B T} \right) \\
+	N_l &= N \dfrac{g_l}{Q(T)} \exp\left(- \dfrac{E_l}{k_B T} \right)
+\end{align}
+$g_u$ and $g_l$ are the degenercies of the upper and lower level respectively and Q(T) is the partition function.
+
+
+\subsection{Line Shapes}
+
+The main line broadening mechanisms is gases are natural line broadening, Doppler broadening and pressure broadening. Natural line broadening can be neglected. Pressure broadening is dominant in lower denser parts of the athmosphere whereas Doppler broadening becomes the dominat broadening mechanism in higher diluted regions of the athmosphere.
+
+\subsubsection{Doppler Broadeing}
+
+Doppler broadened line shapes are given by a Gaussian function:
+
+\begin{align}
+	f_G(\lambda) &= \sqrt{\dfrac{\ln 2}{\pi \Delta \lambda^2}}  
+		\exp \left(- \dfrac{ļn 2}{\Delta \lambda^2}  \left(\lambda - \lambda_0\right)^2 \right) \\
+			\int_{-\infty}^{\infty}  f_G(\lambda) d\lambda &= 1
+\end{align}
+with the half width at half maximum (HWHM) line width:
+\begin{align}
+\dfrac{\Delta \lambda}{\lambda} = \dfrac{v}{c} = \dfrac{1}{c} \sqrt{\dfrac{2 k_B T}{m}}
+\end{align}
+Doppler bradening is  determined by the temperature and the mass of the particles.
+
+\subsubsection{Pressure Broadening}
+
+Pressure broadening is caused by the collisions between molecules, in the present model between $N_2$ and $O_2$ with $CO_2$. 
+The main determining factors are the concentration of the collision partners and the collison frequency. The line shapes are given by a Lorentz function:
+\begin{align}
+	f_L(\lambda) &= \dfrac{1}{\pi} \dfrac{\Delta \lambda}{ (\lambda - \lambda_0)^2 + \Delta \lambda^2} \\
+	\int_{-\infty}^{\infty}  f_L(\lambda) d\lambda &= 1
+\end{align}
+
+Contrary to the Gaussian line shapes of Doppler broadeing Lorentz functions have a much wider extend. In oder to keep computation times low the Lorentz functions have to be cut at a point. To estimate the introduced error the normlized Lorentz function is integrated from $-x_p$ to $x_p$:
+\begin{align}
+	F(x_p) = \dfrac{1}{\pi} \int_{-x_p}^{x_p} \dfrac{1}{1 + x^2} dx = \dfrac{1}{\pi} \left(\arctan(x_p) - \arctan(-x_p)\right)
+\end{align}
+$F(x_p) = 0.9$ at $x_p \approx 6.3$, $0.97$ at $x_p = 20$ and $0.99$ at $x_p = 40$. In the absorption computations limit is set at  $20 \Delta \lambda$ so that approximatly 3\% of the radiation power is missing. To compensate for this a backround of 3\% of a moving average will be added.
+
+

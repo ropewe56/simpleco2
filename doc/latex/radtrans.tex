@@ -1,0 +1,110 @@
+%\documentclass[Optionenliste ]{KOMA - Script-Klasse }
+%\usepackage[Optionenliste ]{Paket-Liste }
+
+%\KOMAoptions{Optionenliste }
+%\KOMAoption{Option }{Werteliste }
+
+%\documentclass[‎a4paper,fleqn]{scrreprt}
+%\documentclass[fleqn]{scrreprt}
+\documentclass[fleqn]{scrartcl}
+
+\usepackage{typearea}
+
+\usepackage[pdftex]{hyperref}
+\usepackage[pdftex]{graphicx}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{mathtools}
+\usepackage{amsmath,amsfonts,amssymb,amsxtra,mathrsfs}
+\usepackage{bm}
+\usepackage{verbatim}
+\usepackage{theorem}
+
+\setlength\mathindent{5mm}
+
+\newcommand{\bildh}[4]
+{
+    \begin{figure}[!h]
+    \centering
+    \includegraphics[width=#2mm]{#1}%{#1.#2}
+    \caption[#3]{#4}
+
+    \label{#1}
+    \end{figure}
+}
+
+\newcommand{\fig}[1]{Figure \ref{#1}}
+\newcommand{\eqn}[1]{Equation \ref{#1}}
+\newcommand{\chap}[1]{Chapter \ref{#1}}
+
+\newcommand{\Ds}[1]{\mathsf{#1}}
+\newcommand{\ds}{\mathsf{d}}
+\newcommand{\Dr}[1]{\mathrm{#1}}
+\newcommand{\dr}{\mathrm{d}}
+\newcommand{\dd}{\mathrm{d}}
+
+\newcommand{\mat}[1]{\mathbf{\underline{#1}}}
+\newcommand{\ranktwo}[1]{\underline{#1}}
+\newcommand{\rankthree}[1]{\mathbf{\underline{\underline{#1}}}}
+\newcommand{\rankfour}[1]{\mathbf{\underline{\underline{\underline{#1}}}}}
+
+\renewcommand{\vec}[1]{\mathbf{#1}}
+\newcommand{\vecs}[1]{\boldsymbol{#1}}
+\newcommand{\vecn}[1]{\vec #1}
+\newcommand{\vect}[1]{\vec{\tilde #1}}
+\newcommand{\vecb}[1]{\vec{\breve #1}}
+\newcommand{\vech}[1]{\vec{\tilde #1}}
+\newcommand{\mx}[1]{\mathbf{\bm{#1}}} % Matrix command
+\newcommand{\vc}[1]{\mathbf{\bm{#1}}} % Vector command
+\newcommand{\rot}[1]{\vec \nabla \times {#1} } % rot
+\newcommand{\divv}[1]{\vec \nabla \cdot {#1} } % rot
+
+\newcommand{\partu}[2]{ \dfrac{\partial #1}{\partial #2} } % partial
+\newcommand{\partuu}[2]{ \dfrac{\partial^2 #1}{\partial #2^2} } % partial
+\newcommand{\partuv}[3]{\dfrac{\partial^2 #1}{\partial #2 \partial #3} } % partial
+
+\providecommand{\abs}[1]{\lvert#1\rvert}
+\providecommand{\norm}[1]{\lVert#1\rVert}
+
+\usepackage[style=numeric]{biblatex}
+\addbibresource{radtrans.bib}
+
+\title{Simple Radiative Transport}
+\author{Rolf Wester}
+\date{\today}
+\makeindex
+
+\begin{document}
+\maketitle
+\tableofcontents
+%\listoffigures
+%\listoftables
+
+\DeclareGraphicsExtensions{.pdf,.png}
+\graphicspath{{figures/} }
+
+%Latex workshop view PDF in vscode tap
+% ctrl + left mouse in pdf
+
+\input{chapter/radtrans_01.tex}
+\input{chapter/radtrans_02.tex}
+\input{chapter/radtrans_03.tex}
+
+\newpage
+\section{Bibliography}
+\printbibliography[heading=none]  
+%\printbibliography[title={Bibliography}]  
+
+\newpage
+\appendix
+\input{chapter/radtrans_a01.tex}
+
+\newpage
+\section{Supplementary Material}
+\input{chapter/radtrans_a02.tex}
+\input{chapter/radtrans_a03.tex}
+\input{chapter/radtrans_a04.tex}
+
+
+\end{document}
