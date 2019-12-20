@@ -1,25 +1,25 @@
 \subsection{Integration of the Radiation Transfer Equation}
 
-\begin{figure}[h]
-	\includegraphics[width=10cm]{figures/geometry.png}
-	\caption{"Geometry of the athmosphere"}
+\begin{figure}[ht]
+	\includegraphics[width=6cm]{figures/geometry.png}
+	\caption{"Geometry of the atmosphere"}
 	\label{fig:geometry}
 \end{figure}
 
-The intensity in \eqn{eqn1} is integrated along a path from the earth surface to the TOA (top of athmosphere) which is assumed to be at a heigth of $70 km$. Assuming constant $\kappa$ and $\epsilon$ in \eqn{eqn1} the solution is given by:
+The intensity in \eqn{eqn1} is integrated along a path from the earth surface to the TOA (top of atmosphere) which is assumed to be at a heigth of $70 km$. Assuming constant $\kappa$ and $\epsilon$ in \eqn{eqn1} the solution is given by:
 \begin{align}
 	I(s) = I(s_0) \exp( -  \kappa (s-s_0)) +  \dfrac{\epsilon}{\kappa} \left(1 - \exp( - \kappa (s-s_0))\right)
 \end{align}
-Because $\kappa$ and $\epsilon$ are not constant along the path from earths surface to TOA the inegration is subdivided into many steps. At each step $\kappa$ and $\epsilon$ are aclculated using local values of temperature and density.
+Because $\kappa$ and $\epsilon$ are not constant along the path from earths surface to TOA the integration is subdivided into many steps. At each step $\kappa$ and $\epsilon$ are calculated using local values of temperature and density.
 
-In order to compute the total irradiance emenating from an area element of the surface to TOA the integration has to be done over the half sphere:
+In order to compute the total irradiance emanating from an area element of the surface to TOA the integration has to be done over the half sphere:
 \begin{align}
 	F(\theta) &= \int_0^{2 \pi} \int_0^{\pi/2} I(\theta) \sin(\theta) \cos(\theta)  d \theta d \phi \\
 	  &= 2 \pi \int_0^{\theta} I(\theta) \sin(\theta) \cos(\theta) d \theta
 \end{align}
 The intensity $I(\theta)$ is computed at $0^o$ and two further angles (in the computations $40^o$ and $80^o$ are chosen), 
-the intermedite values are interpolated by a cubic polnomial (\chap{app_a_2}).
-After determining the polynomial cofficients:
+the intermediate values are interpolated by a cubic polynomial (\chap{app_a_2}).
+After determining the polynomial coefficients:
 \begin{align}
 	a_2 &= \dfrac{(F_1 - F_0) \theta_2^3 - (F_2 - F_0) \theta_1^3}{\theta_1^2 \theta_2^3 - \theta_1^3 \theta_2^2} \\
 	a_3 &= \dfrac{(F_2 - F_0) \theta_1^2 - (F_1 - F_0) \theta_2^2}{\theta_1^2 \theta_2^3 - \theta_1^3 \theta_2^2}
@@ -37,22 +37,22 @@ The contributions of the different polynomial orders assuming constant $I(\theta
 
 \subsection{The HITRAN Data}
 
-The spectroscopic $CO_2$ data where taken from the HIRAN database (\cite{hitran1}). The standard HITRAN data files use a fixed size format and information that are not used in the present report. HITRAN allows to define ones own format and data output. For easier handling the entries are seperated by commas. The data rows are composed of: 
+The spectroscopic $CO_2$ data where taken from the HITRAN database (\cite{hitran1}). The standard HITRAN data files use a fixed size format and information that are not used in the present report. HITRAN allows to define ones own format and data output. For easier handling the entries are separated by commas. The data rows are composed of: 
 \begin{enumerate}
 	\item Molecule ID, for $CO_2$ this is $2$			
  	\item Isotopologue ID, for $CO_2$ $1-9$			
  	\item the transition wavenumber $\nu$	[$cm^{-1}$]		
-    \item the line strength multiplied by isotopologue abunadance $S$, [$cm^{-1}/(molec \;cm^{-2}$]		
+    \item the line strength multiplied by isotopologue abundance $S$, [$cm^{-1}/(molec \;cm^{-2}$]		
  	\item Einstein coefficient of spontaneous emission $A$ [$s^{-1}$]		
- 	\item pressure line broadeing coefficient by collisions with air molecules $\gamma_{air}$ [$cm^{-1} atm^{-1}$]		
- 	\item pressure line broadeing coefficient by collisions with $CO_2$ molecules $\gamma_{self}$ [$cm^{-1} atm^{-1}$]		
+ 	\item pressure line broadening coefficient by collisions with air molecules $\gamma_{air}$ [$cm^{-1} atm^{-1}$]		
+ 	\item pressure line broadening coefficient by collisions with $CO_2$ molecules $\gamma_{self}$ [$cm^{-1} atm^{-1}$]		
 	\item energy of the lower state $E"$ [$cm^{-1}$]		
 	\item temperature exponent $n_{air}$ for the air broadened HWHM			
 	\item pressure shift induced by air $\delta_{air}$, referred to $p = 1 atm$ [$cm^{-1} atm^{-1}$] 		
 	\item upper state degeneracy $g'$			
 	\item upper state degeneracy $g"$
 \end{enumerate}
-In the present report wavelenght $\lambda$ [$m$] and energy [$J$] is used, whereas HITRAN uses wavenumber [$cm^{-1}$]. The transition from wavelenth to wavenumber has to be done carefully.  
+In the present report wavelength $\lambda$ [$m$] and energy [$J$] is used, whereas HITRAN uses wavenumber [$cm^{-1}$]. The transition from wavelenht to wavenumber has to be done carefully.  
 \begin{align*}
 	\lambda_{ul}     & \leftarrow \dfrac{10^{-2}}{\nu}               & [m]                   \\
 	\Delta E_{ul}    & \leftarrow \dfrac{h  c}{\lambda_{ul}}         & [J]                   \\
@@ -67,7 +67,7 @@ The HWHM Doppler line broadening is given by:
 \begin{align*}
 	\alpha_D(T) = \dfrac{\nu_{ij}}{c} \sqrt{\dfrac{2 N_A k T \ln 2}{M}}
 \end{align*}
-The temperatue and pressure dependence of pressure broadened line width and pressure shift are defined by HITRAN as follows \cite{hitran2}: 
+The temperature and pressure dependence of pressure broadened line width and pressure shift are defined by HITRAN as follows \cite{hitran2}: 
 \begin{align*}
 	\gamma(p, T) &= \left(\dfrac{T_{ref}}{T}\right)^{n_{air}}  
 	               \left(  \gamma_{air} (p_{ref}, T_{ref}) (p - p_{self}) +

@@ -1,0 +1,138 @@
+\subsection{Wavelengths Average Absorption}
+
+\begin{align}
+	\dfrac{d I(\lambda)}{ds} = - I(\lambda) \kappa(\lambda)
+\end{align}
+The absorption is a sum of line absorptions:
+\begin{align}
+	\kappa(\lambda) = \sum_i \kappa_i(\lambda_i) f_i(\lambda)
+\end{align}
+Integrating over wavelengths:
+\begin{align}
+	\dfrac{d}{ds} \int_{\Delta \lambda} I(\lambda) d \lambda = - \sum_i  \int_{\Delta \lambda} I(\lambda) \kappa_i(\lambda_i) f_i(\lambda)  d \lambda
+\end{align}
+Assuming that the intensity is constant within the integration intervall:
+\begin{align}
+    \dfrac{d I}{ds} &= - \dfrac{I}{\Delta \lambda} \sum_i \kappa_i(\lambda_i)  \int_{\Delta \lambda}  f_i(\lambda)  d \lambda \\
+                    &= - \dfrac{I}{\Delta \lambda} \sum_i \kappa_i(\lambda_i)
+\end{align}
+Integrating along the path:
+\begin{align}
+	\dfrac{dI}{I} = - \dfrac{1}{\Delta \lambda} \sum_i \kappa_i(\lambda_i) ds
+\end{align}
+yields:
+\begin{align}
+	\ln \dfrac{I(z)}{I(z_0)} = - \dfrac{1}{\Delta \lambda} \int_{z_0}^{z} \sum_i \kappa_i(\lambda_i) ds
+\end{align}
+and finally:
+\begin{align}
+	I(z) = I(z_0) \exp\left( - \dfrac{1}{\Delta \lambda} \int_{z_0}^{z} \sum_i \kappa_i(\lambda_i) ds \right)
+\end{align}
+With $\int_{z_0}^{z} \sum_i \kappa_i(\lambda_i) ds \approx 2 10^{-3}$ the intensity at TOA is near zero, that means all the intensity is absorbed.
+This of course is wrong. The false assumption is that the intensity along the path in the atmosphere is independent of wavelength.
+
+\subsection{Reinhart}
+
+Equation (8) and (9):
+\begin{align}
+    dI_a(u_j) = S_0 f(u_j) \Delta u_j \left(1 - \exp\left(-\int \alpha(\rho, u_j) d \rho\right) \right) 2 \pi \cos \theta \sin \theta d \theta
+\end{align}
+In Reinhart the expression for $\alpha(\rho, u_j)$ is not explicitly given, so the value of $\kappa_i$ as defined above is taken.
+\begin{align}
+    f(u) &= \dfrac{15}{\pi^4} \dfrac{u^3}{\exp(u) - 1} \\
+    u    &= \dfrac{h \nu}{k_B T} \\
+    S_0  &= \sigma T^4
+\end{align}
+If $\exp\left(-\int \alpha(\rho, u_j) d \rho\right)$ only depends slightly on the angle $\theta$ the integral over $theta$ is:
+\begin{align}
+    \int_{0}^{\pi/2} 2 \pi \cos \theta \sin \theta d \theta = \pi
+\end{align}
+Sum over all lines:
+\begin{align}
+    F = \sum_j I_a(u_j) = \sum_j S_0 f(u_j) \Delta u_j \left(1 - \exp\left(-\int \alpha(\rho, u_j) d \rho\right) \right)
+\end{align}
+The sum $F =  \pi S_0 \sum_j f(u_j) \Delta u_j$ has to equal the intensity emitted from the earth surface.
+Assuming $f(u_j) \Delta u_j$ approximately constant:
+\begin{align}
+    \sum_j \left(1 - \exp\left(-\int \alpha(\rho, u_j) d \rho\right) \right)
+\end{align}
+is the relative absorption. The value in the line intervall $[12-18 \mu m]$ is $1.8 10^{-3}$ at 400 ppm $CO_2$ and $3.6  10^{-3}$ at 800 ppm $CO_2$.
+If instead of $\kappa_i$ $\kappa_i / \Delta \lambda$ is taken for $\alpha$ the values are $2.4 10^4$ and $2.8 10^4$ respectively.
+The integral
+
+If the angle between surface normal and the path direction is $\theta$ the path lngth as function of the height $z$ measured from 
+the surface is given by:
+
+\begin{align}
+	s = \dfrac{z}{\cos\theta}
+\end{align}
+Assuming constant $\kappa$ and $\epsilon$ in \eqn{eqn1} the solution is given by:
+\begin{align}
+	I = c(s) \exp( - \kappa s)
+\end{align}
+Inserting into \eqn{eqn1} yields:
+\begin{align}
+		\dfrac{d I}{d s} = \dfrac{d c(s)}{ds } \exp( - \kappa s) - \kappa c(s) \exp( - \kappa s) = - \kappa c(s) \exp( - \kappa s) + \epsilon
+\end{align}
+and:
+\begin{align}
+	\dfrac{d c(s)}{ds}  = \epsilon \exp(\kappa s)
+\end{align}
+Transforming
+\begin{align}
+	\dfrac{d c(s)}{\epsilon}  =  \exp(\kappa s) ds
+\end{align}
+
+\begin{align}
+	\int_{c_0}^c \dfrac{d c(s)}{\epsilon}  =  \int_0^z \exp(\kappa s) ds
+\end{align}
+
+\begin{align}
+	\dfrac{c - c_0}{\epsilon}  = \dfrac{1}{\kappa} \left(\exp(\kappa z) - 1\right)
+\end{align}
+
+\begin{align}
+	c = c_0 + \epsilon \dfrac{1}{\kappa} \left(\exp(\kappa z) - 1\right)
+\end{align}
+
+\begin{align}
+	I = c_0 \exp( - \kappa z) + \epsilon \dfrac{1}{\kappa} \left(1 - \exp( - \kappa z)\right)
+\end{align}
+
+\begin{align}
+	I = I(0) \exp( - \kappa z) +  \dfrac{\epsilon}{\kappa} \left(1 - \exp( - \kappa z)\right)
+\end{align}
+
+
+Reinhart:
+\begin{align}
+	\Delta J_1 &= I_0 \left(1 - \exp( - \kappa_1 z)\right) \Delta \lambda \\
+	\Delta J_2 &= I_0 \left(1 - \exp( - \kappa_2 z)\right) \Delta \lambda 
+\end{align}
+\begin{align}
+	A = \dfrac{\Delta J_1 + \Delta J_2}{I_0 \Delta \lambda} = \left(1 - \exp( - \kappa_1 z)\right) + \left(1 - \exp( - \kappa_2 z)\right)
+\end{align}
+Correct solution:
+\begin{align}
+	\Delta I_1 &= I_0 \left(1 - \exp( - \kappa_1 z)\right) \dfrac{\Delta \lambda}{2} \\
+	\Delta I_2 &= I_0 \left(1 - \exp( - \kappa_2 z)\right) \dfrac{\Delta \lambda}{2} \\
+	\Delta I_{12} &= I_0 \left(1 - \exp( - \kappa_1 z - \kappa_2 z)\right) \dfrac{\Delta \lambda}{2}
+\end{align}
+\begin{align}
+	B = \dfrac{\Delta I_1 + \Delta I_2 + \Delta I_{12}}{I_0 \Delta \lambda} =
+			& \dfrac{1}{2} \left(1 - \exp( - \kappa_1 z)\right) +  \\
+			& \dfrac{1}{2} \left(1 - \exp( - \kappa_2 z)\right) + \\ 
+			& \dfrac{1}{2} \left(1 - \exp( - \kappa_1 z - \kappa_2 z)\right) 
+\end{align}
+The difference is:
+\begin{align}
+	2(A - B) &= \left(1 - \exp( - \kappa_1 z)\right) + \left(1 - \exp( - \kappa_2 z)\right) -
+	\left(1 - \exp( - \kappa_1 z - \kappa_2 z\right) \\
+	2(A - B) &= 1  + \exp(- \kappa_1 z - \kappa_2 z) - \exp( - \kappa_1 z) - \exp( - \kappa_2 z)
+\end{align}
+In case of $\kappa_1 \gg 1$ and $\kappa_2 \gg 1$ this yields: 
+\begin{align}
+	(\Delta J_1 + \Delta J_2) - (\Delta I_1 + \Delta I_2 + \Delta I_{12})=
+	I_0 \dfrac{\Delta \lambda}{2}
+\end{align}
+That means the absorption of the overlapping region is counted twice.
