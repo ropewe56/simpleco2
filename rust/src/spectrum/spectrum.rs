@@ -17,6 +17,7 @@ use std::io::prelude::*;
 
 use std::collections::HashMap;
 
+use crate::spectrum::resultdata::ResultData;
 use crate::spectrum::parameter::Parameter;
 use crate::spectrum::profiles::VoigtProfile;
 use crate::spectrum::ioutil::{save_npy_2, save_npy_1, load_npy_2, load_npy_1, load_npy_1_i, open_file};
@@ -59,6 +60,7 @@ pub struct Spectrum {
     pub logfile  : File,
     /// logfile F
     pub logfile_F: File,
+    pub resultdata:   ResultData,
 }
 
 /// Spectrum implementation
@@ -175,6 +177,9 @@ impl Spectrum {
         let mut logfile = open_file(par.out_dir.as_str(), par.logfile.as_str());
         let mut logfile_F = open_file(par.out_dir.as_str(), par.logfile_F.as_str());
 
+        //resukts
+        let mut resultdata = ResultData::new();
+
         // output of isotope ids
         let mut keys_vec: Vec<(&usize, &usize)> = isotope_ids.iter().collect();
         keys_vec.sort_by(|a, b| a.0.cmp(b.0));
@@ -212,6 +217,7 @@ impl Spectrum {
                  ϵ_c      : Array1::<f64>::zeros(nb_λ),
                  logfile  : logfile,
                  logfile_F: logfile_F,
+                 resultdata  : resultdata,
             }
     }
 
@@ -589,6 +595,7 @@ impl Spectrum {
             };
             self.logfile.flush();
             print!("{}", out);
+            //self.resultdata.add(self.z[istep], NCO2*1.0e6, θ*180.0/self.par.pi, I_mean, T, N, ϵ_mean, κ_mean, ΔλL_mean, ΔλD_mean);
         }  // lop over z istep
 
         results
@@ -638,5 +645,6 @@ impl Spectrum {
                 save_npy_2(&fname, &results);
             }
         }
+        //self.resultdata.write_data(self.par.out_dir.as_str(), "data.npy");
     }
 }

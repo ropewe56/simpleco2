@@ -6,3 +6,4 @@ pub mod ioutil;
 pub mod rdutil;
 pub mod interpolator;
 pub mod spectralline;
+pub mod resultdata;

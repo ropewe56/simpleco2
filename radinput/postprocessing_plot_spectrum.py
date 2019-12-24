@@ -176,6 +176,8 @@ import parameter_input
 
 _, out_root, _, _ = parameter_input.get_root_dirs()
 
+out_root = "/home/rolf/Projects/climate/radtrans/radoutput"
+
 subdir = 'F'
 subsubdirs = os.listdir(os.path.join(out_root, subdir))
 subsubdirs.sort()
