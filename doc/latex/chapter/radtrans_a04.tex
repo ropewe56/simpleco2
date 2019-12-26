@@ -1,25 +1,59 @@
+\section{Coments on the Article Reinhart}
+
 \subsection{Difference between the Radiation Transfer Equation and Reinhart Equation (9)}
 
 \subsubsection{Radiation Transfer Equation}
-
+The radiation transfer equation excluding emission reads:
 \begin{align}
-	\dfrac{d I(\lambda)}{ds} = - I(\lambda) \kappa(\lambda)
-\end{align}
-\begin{align}
-	\dfrac{I_{abs}}{I_0} = \int_{\lambda_1}^{\lambda_2} \left(1 - \exp(-\kappa(\lambda) z)\right) d \lambda
+	\label{eqn:120}
+	\dfrac{d I(\lambda, s)}{ds} = - I(\lambda, s) \sum_i \kappa_i f_i(\lambda)
 \end{align}
 
-\subsubsection{Reinhart Equation (9)}
-
+Integration along the propagation path yields:
 \begin{align}
-	\dfrac{I_{abs}}{I_0} = \sum_i (1 - \exp(-\kappa_i z)) \Delta \lambda_i
+	\dfrac{I(\lambda,s)}{I(\lambda, s = 0)} = \left(1 - \exp\left(-\sum_i \kappa_i f_i(\lambda) s\right)\right)
 \end{align}
+
+Integration over a wavelength interval yields:
+\begin{align}
+	\label{eqn:122}
+	\dfrac{I_{abs}}{I_0} = \int_{\Delta \lambda} \left(1 - \exp\left(-\sum_i \kappa_i f_i(\lambda) s\right)\right) d \lambda
+\end{align}
+
+\subsubsection{Wavelengths Average Absorption}
+
+Integrating \eqn{eqn:120} over a wavelength interval:
+\begin{align}
+	\dfrac{d}{ds} \int_{\Delta \lambda} I(\lambda, s) d \lambda = - \sum_i  \int_{\Delta \lambda} I(\lambda, s) \kappa_i f_i(\lambda)  d \lambda
+\end{align}
+Assuming that the intensity is constant within the integration interval:
+\begin{align}
+    \dfrac{d I(s)}{ds} &= - \dfrac{I}{\Delta \lambda} \sum_i \kappa_i  \int_{\Delta \lambda}  f_i(\lambda)  d \lambda \\
+                    &= - \dfrac{I}{\Delta \lambda} \sum_i \kappa_i(\lambda_i)
+\end{align}
+Integrating along the propagation path:
+\begin{align}
+	\dfrac{dI(s)}{I(s)} = - \dfrac{1}{\Delta \lambda} \sum_i \kappa_i ds
+\end{align}
+yields:
+\begin{align}
+	\ln \dfrac{I(s)}{I(0)} = - \dfrac{1}{\Delta \lambda} \int_{0}^{s} \sum_i \kappa_i ds
+\end{align}
+and finally:
+\begin{align}
+	\label{eqn:128}
+	\dfrac{I_{abs}}{I_0} = 1 - \exp\left( - \dfrac{1}{\Delta \lambda} \int_{0}^{s} \sum_i \kappa_i ds \right)
+\end{align}
+
+\eqn{eqn:122} and \eqn{eqn:128} result in different values. This is because the assumption of constant intensity 
+is in general not valid and that spectrally overlapping lines cannot be treated separatly. 
+In the following section a simple is employed to demonstrate this.
 
 \subsubsection{Simple Model}
 
 Two partially overlapping lines with rectangle shaped line shapes:
 \begin{figure}[ht]
-	\includegraphics[width=6cm]{figures/overlappinglines2.png}
+	\includegraphics[width=6cm]{figures/overlappinglines2.pdf}
 	\caption{Two overlapping lines with rectangle line shape functions}
 	\label{fig:overlappinglines}
 \end{figure}

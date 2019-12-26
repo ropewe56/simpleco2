@@ -1,14 +1,14 @@
 \subsection{Integration of the Radiation Transfer Equation}
 
 \begin{figure}[ht]
-	\includegraphics[width=6cm]{figures/geometry.png}
-	\caption{"Geometry of the atmosphere"}
+	\includegraphics[width=12cm]{figures/earth_surface_toa.pdf}
+	\caption{"Geometry of earth and atmosphere"}
 	\label{fig:geometry}
 \end{figure}
 
 The intensity in \eqn{eqn1} is integrated along a path from the earth surface to the TOA (top of atmosphere) which is assumed to be at a heigth of $70 km$. Assuming constant $\kappa$ and $\epsilon$ in \eqn{eqn1} the solution is given by:
 \begin{align}
-	I(s) = I(s_0) \exp( -  \kappa (s-s_0)) +  \dfrac{\epsilon}{\kappa} \left(1 - \exp( - \kappa (s-s_0))\right)
+	I(s) = I(s_0) \exp( -  \kappa (s-s_0)) + \dfrac{\epsilon}{\kappa} \left(1 - \exp( - \kappa (s-s_0))\right)
 \end{align}
 Because $\kappa$ and $\epsilon$ are not constant along the path from earths surface to TOA the integration is subdivided into many steps. At each step $\kappa$ and $\epsilon$ are calculated using local values of temperature and density.
 
