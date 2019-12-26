@@ -42,6 +42,7 @@ class DataSets:
     def __init__(self, out_root, subdir, subsubdirs):
         self.dirs = []
         for ssd in subsubdirs:
+            print(ssd)
             self.dirs.append(os.path.join(out_root, subdir, ssd))
 
         self.dirs.sort()

@@ -429,7 +429,7 @@ impl Spectrum {
     }
 
     /// integrate along the path
-    pub fn integrate_along_path(&mut self, iN: usize, iθ: usize, NCO2: &f64, θ: &f64) -> Array2<f64> {
+    pub fn integrate_along_path(&mut self, iN: usize, iθ: usize, NCO2: &f64, θ: &f64) -> ResultData {
         // z
         let nb_zsteps = self.z.len();
         let zp = self.p_vs_h.xy[[self.p_vs_h.xy.nrows()-1, 0]];
@@ -460,11 +460,9 @@ impl Spectrum {
         let N = p / (self.par.kB * T);
 
         // results array
-        let mut results = Array2::<f64>::zeros((nb_zsteps + 1, 10));
+        let mut results = ResultData::new();
         let I_mean = I_λ.iter().sum::<f64>()*dλ;
-        results[[0, 0]] = 0.0; results[[0, 1]] = *NCO2; results[[0, 2]] = *θ;  results[[0, 3]] = I_mean;
-        results[[0, 4]] = T;   results[[0, 5]] = N;     results[[0, 6]] = 0.0; results[[0, 7]] = 0.0;
-        results[[0, 8]] = 0.0; results[[0, 9]] = 0.0;
+        results.add(0.0, *NCO2, *θ, I_mean, T, N, 0.0, 0.0, 0.0, 0.0);
 
         // save results of zeroth step
         let out = format!("iz = {:3}, z = {:12.5e},  NCO2 = {:12.5e}, θ = {:12.5e}, I = {:12.5e}, T = {:12.5e}, N = {:12.5e}, ϵ = {:12.5e}, κ = {:12.5e}, ΔλL = {:12.5e}, ΔλD = {:12.5e}\n",
@@ -506,7 +504,7 @@ impl Spectrum {
             }
 
             let t1 = Instant::now();
-            // compute the line coeficients 
+            // compute the line coefficients 
             let (ΔλL_mean, ΔλD_mean) = self.compute_emission_and_absorption(T, N, p, *NCO2);
             let t2 = Instant::now();
             // compute ϵ(λ) = sum_i \int ϵ_i(λ_i) f(λ-λ_i) dλ 
@@ -582,9 +580,7 @@ impl Spectrum {
             let κ_mean = vκ.into_iter().sum::<f64>()*dλ;
 
             // set results vector
-            results[[istep, 0]] = self.z[istep];  results[[istep, 1]] = *NCO2;   results[[istep, 2]] = *θ;     results[[istep, 3]] = I_mean;
-            results[[istep, 4]] = T;              results[[istep, 5]] = N;       results[[istep, 6]] = ϵ_mean; results[[istep, 7]] = κ_mean;
-            results[[istep, 8]] = ΔλL_mean;       results[[istep, 9]] = ΔλD_mean;
+            results.add(self.z[istep], *NCO2, *θ, I_mean, T, N, ϵ_mean, κ_mean, ΔλL_mean, ΔλD_mean);
 
             // write results to log file
             let out = format!("iz = {:3}, z = {:12.5e},  NCO2 = {:12.5e}, θ = {:12.5e}, I = {:12.5e}, T = {:12.5e}, N = {:12.5e}, ϵ = {:12.5e}, κ = {:12.5e}, ΔλL = {:12.5e}, ΔλD = {:12.5e}\n",
@@ -638,11 +634,11 @@ impl Spectrum {
                 print!("{}", out);
 
                 // integrate along path
-                let results = self.integrate_along_path(iN, iθ, NCO2, θ);
+                let mut results = self.integrate_along_path(iN, iθ, NCO2, θ);
 
                 // save results 
-                let fname = [self.par.out_dir.as_str(), format!("result-{}_{}.npy", iN, iθ).as_str()].join("/");
-                save_npy_2(&fname, &results);
+                let fname = format!("result-{}_{}.npy", iN, iθ);
+                results.write_data(&self.par.out_dir.as_str(), &fname);
             }
         }
         //self.resultdata.write_data(self.par.out_dir.as_str(), "data.npy");
