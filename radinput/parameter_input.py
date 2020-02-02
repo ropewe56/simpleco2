@@ -5,6 +5,20 @@ import platform
 
 script_root = os.path.abspath(os.path.dirname(__file__))
 
+"""
+Input parameter:
+    CO2 concentration values
+    Inclination angle values
+    Input parameter for determining height values
+        Tconst = False: temperature and density values vary according to height in the atmosphere 
+               = True : temperature is constant, density value varies according to height in the atmosphere
+        with_emission = True: include emission in the radiation transfer equation 
+                        False: neglect emission in the radiation transfer equation 
+        albedo: 
+        nisos: number of CO2 isotopes included
+        bg: background added to the absorption and emission coefficients because of the cut off of Lorentz shape contributions
+        dl: wavelength resolution 
+"""
 input_run_parameter = {
     "NCO2"      : [400.0*1.0e-6, 800.0*1.0e-6],
     "theta_deg" : [0.0, 40.0, 80.0],
@@ -48,7 +62,7 @@ def get_parameter_dict(data_dir):
             "lmin"               : 1.2e-5,
             "lmax"               : 1.8e-5,
             "dl"                 : 1.0e-11,
-            "Dl_factor"          : 20.0,
+            "Dl_factor"          : 20.0,        # relative width of the line shapes
             "p_ref"              : 1013.25e2,  # N / m^2
             "T_ref"              : 296.0,      # K
             "albedo"             : 0.0,
