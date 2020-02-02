@@ -2,7 +2,7 @@
 
 Climate change, its causes, and possible remedies are in public focus. There is a consensus on the human made climate change amoung a vast majority of climate scientist. Yet there are still people who promote the idea that there is no climate change or if there is climate change that the causes are natural and not man made und thus can not be influenced by humans. 
 
-As a small contribution to the ongoing discussions in the public realm the objective of this report is to define and implement a very basic model of the earth's atmosphere and determine the amount of infrared radiation that is absorbed in the $15 \mu m$ absorption band of $CO_2$. This results of this little model are only meant to show the effect of $CO_2$ under quite simplifying assumptions are by no means a replacement for the many excellent research made in this field.    
+As a small contribution to the ongoing discussions in the public realm the objective of this report is to define and implement a very basic model of the earth's atmosphere and determine the amount of infrared radiation that is absorbed in the $15 \mu m$ absorption band of $CO_2$. The results of this simple model are only meant to show the effect of $CO_2$ under quite simplifying assumptions and are by no means a replacement for the many excellent research made in this field.    
 
 The model is described below and the source code is made available so that everybody interested can check the results. If the author has made a mistake, be it in the model definition or the computational code, he would be very appreciative for any hint.
 
@@ -17,7 +17,7 @@ The key assumptions of the simple atmosphere model are:
 	\item Only upward traveling radiation is considered  
 	\item The main result is the difference in infrared radiation at the top of the atmosphere (TOA) at $70 km$ escaping to free space 
 	\item Scattering will be neglected
-	\item The atmospheric  gas is in local thermodynamic equilibrium so that all energy levels are occupied according to 
+	\item The atmospheric gas is in local thermodynamic equilibrium so that all energy levels are occupied according to 
 	the Boltzmann factor
 	\item All spectroscopic data of $CO_2$ are taken from the HITRAN data base. 
 \end{itemize}
@@ -42,8 +42,7 @@ The spontaneous emission $\epsilon_\lambda$ is given by:
 	\epsilon_\lambda &= \dfrac{1}{4 \pi} \dfrac{h c}{\lambda} N_u A_{ul} f(\lambda)
 	 \dfrac{\lambda^2}{c}
 \end{align}
-$A_{ul}$ ist the Einstein coefficient of spontaneous emission from upper to lower energy state, $N_u$ the density of the upper state and is the
-$f(\lambda)$ line shape. The absorption coefficient $\kappa_\lambda$ is given by:
+$A_{ul}$ ist the Einstein coefficient of spontaneous emission from upper to lower energy state, $N_u$ the density of the upper state and $f(\lambda)$ is the line shape. The absorption coefficient $\kappa_\lambda$ is given by:
 \begin{align}
 	\kappa_\lambda  = \dfrac{h}{\lambda}  \left(  B_{lu} N_l -  B_{ul} N_u \right) f(\lambda)
 	 \dfrac{\lambda^2}{c}
@@ -63,7 +62,7 @@ $g_u$ and $g_l$ are the degeneracies of the upper and lower level respectively a
 
 \subsection{Line Shapes}
 
-The main line broadening mechanisms is gases are natural line broadening, Doppler broadening and pressure broadening. Natural line broadening can be neglected. Pressure broadening is dominant in lower denser parts of the atmosphere whereas Doppler broadening becomes the dominat broadening mechanism in higher diluted regions of the atmosphere.
+The main line broadening mechanisms in gases are natural line broadening, Doppler broadening and pressure broadening. Natural line broadening can be neglected. Pressure broadening is dominant in the denser parts of the atmosphere whereas Doppler broadening only becomes the dominant broadening mechanism in higher diluted regions of the atmosphere.
 
 \subsubsection{Doppler Broadening}
 
@@ -88,10 +87,10 @@ The main determining factors are the concentration of the collision partners and
 	\int_{-\infty}^{\infty}  f_L(\lambda) d\lambda &= 1
 \end{align}
 
-Contrary to the Gaussian line shapes of Doppler broadening Lorentz functions have a much wider extend. In oder to keep computation times low the Lorentz functions have to be cut at a point. To estimate the introduced error the normlized Lorentz function is integrated from $-x_p$ to $x_p$:
+Contrary to the Gaussian line shapes of Doppler broadening Lorentz functions have a much wider extend. In order to keep computation times low the Lorentz functions have to be cut at a point. To estimate the introduced error the normalized Lorentz function is integrated from $-x_p$ to $x_p$:
 \begin{align}
 	F(x_p) = \dfrac{1}{\pi} \int_{-x_p}^{x_p} \dfrac{1}{1 + x^2} dx = \dfrac{1}{\pi} \left(\arctan(x_p) - \arctan(-x_p)\right)
 \end{align}
-$F(x_p) = 0.9$ at $x_p \approx 6.3$, $0.97$ at $x_p = 20$ and $0.99$ at $x_p = 40$. In the absorption computations limit is set at  $20 \Delta \lambda$ so that approximatly 3\% of the radiation power is missing. To compensate for this a backround of 3\% of a moving average will be added.
+$F(x_p) = 0.9$ at $x_p \approx 6.3$, $0.97$ at $x_p = 20$ and $0.99$ at $x_p = 40$. In the absorption computations the limit is set at  $20 \Delta \lambda$ so that approximately 3\% of the radiation power is missing. To compensate for this a background of 3\% of a moving average will be added.
 
 

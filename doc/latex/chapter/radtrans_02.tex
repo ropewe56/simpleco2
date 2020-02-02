@@ -6,7 +6,7 @@
 	\label{fig:geometry}
 \end{figure}
 
-The intensity in \eqn{eqn1} is integrated along a path from the earth surface to the TOA (top of atmosphere) which is assumed to be at a heigth of $70 km$. Assuming constant $\kappa$ and $\epsilon$ in \eqn{eqn1} the solution is given by:
+The intensity in \eqn{eqn1} is integrated along a path from the earth surface to the TOA (top of atmosphere) which is assumed to be at a height of $70 km$. Assuming constant $\kappa$ and $\epsilon$ in \eqn{eqn1} the solution is given by:
 \begin{align}
 	I(s) = I(s_0) \exp( -  \kappa (s-s_0)) + \dfrac{\epsilon}{\kappa} \left(1 - \exp( - \kappa (s-s_0))\right)
 \end{align}
@@ -37,22 +37,22 @@ The contributions of the different polynomial orders assuming constant $I(\theta
 
 \subsection{The HITRAN Data}
 
-The spectroscopic $CO_2$ data where taken from the HITRAN database (\cite{hitran1}). The standard HITRAN data files use a fixed size format and information that are not used in the present report. HITRAN allows to define ones own format and data output. For easier handling the entries are separated by commas. The data rows are composed of: 
+The spectroscopic $CO_2$ data where taken from the HITRAN database (\cite{hitran1}). The standard HITRAN data files use a fixed size format and include data that are not used in the present report. HITRAN allows to define ones own format and data output. For easier handling the entries are separated by commas. The data rows are composed of: 
 \begin{enumerate}
 	\item Molecule ID, for $CO_2$ this is $2$			
  	\item Isotopologue ID, for $CO_2$ $1-9$			
- 	\item the transition wavenumber $\nu$	[$cm^{-1}$]		
-    \item the line strength multiplied by isotopologue abundance $S$, [$cm^{-1}/(molec \;cm^{-2}$]		
+ 	\item The transition wavenumber $\nu$	[$cm^{-1}$]		
+    \item The line strength multiplied by isotopologue abundance $S$, [$cm^{-1}/(molec \;cm^{-2}$]		
  	\item Einstein coefficient of spontaneous emission $A$ [$s^{-1}$]		
- 	\item pressure line broadening coefficient by collisions with air molecules $\gamma_{air}$ [$cm^{-1} atm^{-1}$]		
+ 	\item Pressure line broadening coefficient by collisions with air molecules $\gamma_{air}$ [$cm^{-1} atm^{-1}$]		
  	\item pressure line broadening coefficient by collisions with $CO_2$ molecules $\gamma_{self}$ [$cm^{-1} atm^{-1}$]		
-	\item energy of the lower state $E"$ [$cm^{-1}$]		
-	\item temperature exponent $n_{air}$ for the air broadened HWHM			
-	\item pressure shift induced by air $\delta_{air}$, referred to $p = 1 atm$ [$cm^{-1} atm^{-1}$] 		
-	\item upper state degeneracy $g'$			
-	\item upper state degeneracy $g"$
+	\item Energy of the lower state $E"$ [$cm^{-1}$]		
+	\item Temperature exponent $n_{air}$ for the air broadened HWHM			
+	\item Pressure shift induced by air $\delta_{air}$, referred to $p = 1 atm$ [$cm^{-1} atm^{-1}$] 		
+	\item Upper state degeneracy $g'$			
+	\item Lower state degeneracy $g"$
 \end{enumerate}
-In the present report wavelength $\lambda$ [$m$] and energy [$J$] is used, whereas HITRAN uses wavenumber [$cm^{-1}$]. The transition from wavelenht to wavenumber has to be done carefully.  
+In the present report wavelength $\lambda$ [$m$] and energy [$J$] is used, whereas HITRAN uses wavenumber [$cm^{-1}$]. The transition from wavelength to wavenumber has to be done carefully.  
 \begin{align*}
 	\lambda_{ul}     & \leftarrow \dfrac{10^{-2}}{\nu}               & [m]                   \\
 	\Delta E_{ul}    & \leftarrow \dfrac{h  c}{\lambda_{ul}}         & [J]                   \\
@@ -76,3 +76,22 @@ The temperature and pressure dependence of pressure broadened line width and pre
 \end{align*}
 
 Temperature dependent partition functions can be found at \cite{hitran3}.
+
+
+\subsection{Computational Details}
+
+The wavelength dependent intensity and the absorption and emission coefficients are discretized between $13 \mu m$ and $17 \mu m$. The wavelength resolution used is $10^{-11} m$. In order to check if this resolution is sufficient computations with $10^{-12} m$ were performed but showed only very small differences compared to the coarser resolution.      
+\newline
+\newline
+The initial intensity is given by the Planck function at $288 K$:
+\begin{align}
+	I_\lambda = \dfrac{2 \pi h c^2}{\lambda^5} \dfrac{1}{\exp\left(\dfrac{h c}{\lambda k_B T}\right) - 1}
+\end{align}
+The absorption and emission coefficients are the sums of all contributing lines: 
+\begin{align*}
+	\kappa(\lambda_j) &= \sum_i \kappa_i f_i(\lambda_j - \lambda_i) \\
+	\epsilon(\lambda_j) &= \sum_i \epsilon_i f_i(\lambda_j - \lambda_i)
+\end{align*}
+The sums are over all transition lines included. $j$ is the wavelength index of the descretized wavelength. 
+
+
